@@ -3,6 +3,8 @@ package br.com.fiap.locadora.view;
 import br.com.fiap.locadora.model.Cliente;
 import br.com.fiap.locadora.model.Locacao;
 import br.com.fiap.locadora.model.Veiculo;
+import br.com.fiap.locadora.service.ClienteService;
+import br.com.fiap.locadora.service.MenuService;
 import br.com.fiap.locadora.service.VeiculoService;
 
 import java.time.LocalDate;
@@ -11,16 +13,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        MenuService menu = new MenuService();
 
-        System.out.println("Digite o numero correspondente ao menu" +
-                "1) Cadastrar veiculo" +
-                "2) Cadastrar cliente" +
-                "3) Efetivar locação" +
-                "" +
-                "10) Sair do programa");
+        System.out.println(menu.mostrarMenu());
+
         int opcaoMenu = sc.nextInt();
         ArrayList<Cliente> clientesList = new ArrayList<>();
         ArrayList<Veiculo> veiculosList = new ArrayList<>();
@@ -40,14 +39,12 @@ public class Main {
                     String veiculoCor = sc.nextLine();
                     System.out.println("Fabricante: ");
                     String veiculoFabricante = sc.nextLine();
+
                     Veiculo veiculo = new Veiculo(veiculoModelo, veiculoPlaca, veiculoAno, veiculoCor, veiculoFabricante);
+
                     veiculosList.add(veiculo);
-                    System.out.println("Digite o numero correspondente ao menu" +
-                            "1) Cadastrar veiculo" +
-                            "2) Cadastrar cliente" +
-                            "3) Efetivar locação" +
-                            "" +
-                            "10) Sair do programa");
+
+                    System.out.println(menu.mostrarMenu());
                     opcaoMenu = sc.nextInt();
                     sc.nextLine();
                     break;
@@ -62,14 +59,16 @@ public class Main {
                     sc.nextLine();
                     System.out.println("CNH: ");
                     String clienteCnh = sc.nextLine();
+
                     Cliente cliente = new Cliente(clienteNome, clienteCPF, clienteIdade,clienteCnh );
+
+                    clientesList.add(cliente);
+
+                    System.out.println(menu.mostrarMenu());
+                    opcaoMenu = sc.nextInt();
+                    sc.nextLine();
                     break;
                 case 3:
-
-                    System.out.println("Exibir Veiculos Cadastrados!");
-                    VeiculoService veiculoService = new VeiculoService();
-                    System.out.println(veiculoService.veiculoParaLocacao(veiculosList));
-
                     System.out.println("Dados para locação: ");
                     System.out.println("Ativa ou nao");
                     boolean locacaoInput = sc.nextBoolean();
@@ -81,12 +80,27 @@ public class Main {
 
                     System.out.println("Data de devolução: ");
                     String locacaoDataFim = sc.nextLine();
+
                     LocalDate locacaoDataFinalFormatada = LocalDate.parse(locacaoDataFim, formatter);
 
                     Locacao locacao = new Locacao(locacaoInput, locacaoDataInicioFormatada, locacaoDataFinalFormatada);
-
                     System.out.println("Dados da locacao veiculo e cliente: " + locacao.imprimirLocacao());
-                    
+                    break;
+                case 4:
+                    System.out.println("Exibir Veiculos Cadastrados!");
+                    VeiculoService veiculoService = new VeiculoService();
+                    System.out.println(veiculoService.veiculoParaLocacao(veiculosList));
+                    menu.mostrarMenu();
+                    opcaoMenu = sc.nextInt();
+                    sc.nextLine();
+                    break;
+                case 5:
+                    System.out.println("Exibir Usuarios cadastrados!");
+                    ClienteService clienteService = new ClienteService();
+                    System.out.println(clienteService.mostrarUsuariosCadastrados(clientesList));
+                    menu.mostrarMenu();
+                    opcaoMenu = sc.nextInt();
+                    sc.nextLine();
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcaoMenu);
