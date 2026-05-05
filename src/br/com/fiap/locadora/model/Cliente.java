@@ -45,4 +45,16 @@ public class Cliente {
     public void setIdade(int idade) {
         this.idade = idade;
     }
+
+    public String exibirInformacaoCliente(){
+        return """
+                Nome: %s
+                cpf: %s
+                idade: %d
+                cnh: %s
+                """.formatted(this.nome, this.cpf, this.idade, this.cnh);
+    }
+
+
+
 }

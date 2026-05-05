@@ -56,7 +56,15 @@ public class Veiculo {
         this.fabricante = fabricante;
     }
 
-
+    public String exibirInformacaoVeiculo(){
+        return """
+                modelo: %s
+                placa: %s
+                ano: %d
+                cor: %s
+                fabricante: %s
+                """.formatted(this.modelo, this.placa ,this.ano, this.cor, this.fabricante);
+    }
 
 
 

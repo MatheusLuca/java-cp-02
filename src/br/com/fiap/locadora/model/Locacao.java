@@ -18,6 +18,12 @@ public class Locacao {
         this.dataFim = dataFim;
     }
 
+    public Locacao(boolean ativa, LocalDate dataInicio, LocalDate dataFim) {
+        this.ativa = ativa;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -58,6 +64,18 @@ public class Locacao {
         this.dataFim = dataFim;
     }
 
+    public String imprimirLocacao() {
+        return """
+                ativa: %b
+                dataInicio: %s
+                dataFim: %s
+                cliente:%s
+                veiculo:%s
+                """.formatted(
+                ativa,
+                dataInicio,
+                dataFim, cliente.exibirInformacaoCliente(), veiculo.exibirInformacaoVeiculo());
+    }
 
 
 
