@@ -17,7 +17,8 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         MenuService menu = new MenuService();
-
+        VeiculoService veiculoService = new VeiculoService();
+        ClienteService clienteService = new ClienteService();
         System.out.println(menu.mostrarMenu());
 
         int opcaoMenu = sc.nextInt();
@@ -69,6 +70,14 @@ public class Main {
                     sc.nextLine();
                     break;
                 case 3:
+
+                    System.out.println("Digite um nome para verificar se o usuario já está cadastrado!");
+                    String usuarioCadastrado = sc.nextLine();
+                    System.out.println();
+                    Cliente clienteEncontrado = clienteService.buscarUsuarioParaLocacao(clientesList,usuarioCadastrado);
+                    System.out.println(clienteEncontrado.exibirInformacaoCliente());
+
+
                     System.out.println("Dados para locação: ");
                     System.out.println("Ativa ou nao");
                     boolean locacaoInput = sc.nextBoolean();
@@ -88,7 +97,7 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Exibir Veiculos Cadastrados!");
-                    VeiculoService veiculoService = new VeiculoService();
+
                     System.out.println(veiculoService.veiculoParaLocacao(veiculosList));
                     menu.mostrarMenu();
                     opcaoMenu = sc.nextInt();
@@ -96,11 +105,14 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Exibir Usuarios cadastrados!");
-                    ClienteService clienteService = new ClienteService();
+
                     System.out.println(clienteService.mostrarUsuariosCadastrados(clientesList));
                     menu.mostrarMenu();
                     opcaoMenu = sc.nextInt();
                     sc.nextLine();
+                    break;
+
+                case 6:
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcaoMenu);

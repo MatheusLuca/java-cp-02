@@ -18,4 +18,15 @@ public class ClienteService {
 
     }
 
+    public Cliente buscarUsuarioParaLocacao(ArrayList<Cliente> lista, String nome){
+        for(Cliente u : lista){
+            if(u.getNome().equalsIgnoreCase(nome)){
+                return u;
+            }
+        }
+        return null;
+    }
+
+
+
 }

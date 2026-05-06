@@ -8,11 +8,12 @@ public class VeiculoService {
 
     public String veiculoParaLocacao(ArrayList<Veiculo> lista) {
         String resultado = "";
-
         for (Veiculo v : lista) {
             resultado += v.exibirInformacaoVeiculo() + "\n";
         }
-
         return resultado;
     }
+
+
+
 }
