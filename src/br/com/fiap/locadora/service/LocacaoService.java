@@ -16,4 +16,6 @@ public class LocacaoService {
         return true;
     }
 
+    public Locacao informacaoLocacao
+
 }

@@ -69,7 +69,7 @@ public class Veiculo {
     }
 
     public String exibirInformacaoVeiculo() {
-        String status = disponivel ? "Disponível" : "Indisponível";
+        String status = disponivel ? "Disponível" : "Alugado";
         return """
             ┌── Veículo ──────────────────
             │ Modelo . . . . . . : %s

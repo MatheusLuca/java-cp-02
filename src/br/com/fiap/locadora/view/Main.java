@@ -74,7 +74,6 @@ public class Main {
                     sc.nextLine();
                     break;
                 case 3:
-
                     //Efetuar Locacao
                     System.out.println("Digite um nome para verificar se o usuario já está cadastrado!");
                     String usuarioCadastrado = sc.nextLine();
@@ -88,10 +87,12 @@ public class Main {
                     System.out.println("Digite o modelo do veiculo: ");
                     String modeloInput = sc.nextLine();
                     Veiculo veiculoEncontrado = veiculoService.veiculoDisponivel(veiculosList, modeloInput);
-                    System.out.println(veiculoEncontrado.exibirInformacaoVeiculo());
+
 
                     //Verifica se o veiculo está disponivel para locação e se o cliente ja fez locacao antes
                     if (veiculoEncontrado.isDisponivel() && (locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado))) {
+                        System.out.println(veiculoEncontrado.exibirInformacaoVeiculo());
+                        System.out.println(clienteEncontrado.exibirInformacaoCliente());
                         System.out.println("Data inicial locacao: ");
                         String locacaoDataInicio = sc.nextLine();
                         LocalDate locacaoDataInicioFormatada = LocalDate.parse(locacaoDataInicio, formatter);
@@ -110,7 +111,9 @@ public class Main {
 
                         //Se nao tiver disponivel
                     } else if (!locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado)) {
-                        System.out.println("Cliente ja possui locacao ativa");
+                        System.out.printf("Cliente %s ja possui  o  veiculo %s locado", clienteEncontrado.getNome());
+                        clienteEncontrado.getNome();
+
                         System.out.println(menu.mostrarMenu());
                         opcaoMenu = sc.nextInt();
                         sc.nextLine();
