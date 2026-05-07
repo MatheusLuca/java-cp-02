@@ -4,6 +4,7 @@ import br.com.fiap.locadora.model.Cliente;
 import br.com.fiap.locadora.model.Locacao;
 import br.com.fiap.locadora.model.Veiculo;
 import br.com.fiap.locadora.service.ClienteService;
+import br.com.fiap.locadora.service.LocacaoService;
 import br.com.fiap.locadora.service.MenuService;
 import br.com.fiap.locadora.service.VeiculoService;
 
@@ -19,14 +20,17 @@ public class Main {
         MenuService menu = new MenuService();
         VeiculoService veiculoService = new VeiculoService();
         ClienteService clienteService = new ClienteService();
+        LocacaoService locacaoService = new LocacaoService();
         System.out.println(menu.mostrarMenu());
 
         int opcaoMenu = sc.nextInt();
         ArrayList<Cliente> clientesList = new ArrayList<>();
         ArrayList<Veiculo> veiculosList = new ArrayList<>();
+        ArrayList<Locacao> locacaoList = new ArrayList<>();
         sc.nextLine();
-        while( opcaoMenu != 10){
-            switch (opcaoMenu){
+
+        while (opcaoMenu != 10) {
+            switch (opcaoMenu) {
                 case 1:
                     System.out.println("Cadastrar veiculo ");
                     System.out.println("Modelo: ");
@@ -61,7 +65,7 @@ public class Main {
                     System.out.println("CNH: ");
                     String clienteCnh = sc.nextLine();
 
-                    Cliente cliente = new Cliente(clienteNome, clienteCPF, clienteIdade,clienteCnh );
+                    Cliente cliente = new Cliente(clienteNome, clienteCPF, clienteIdade, clienteCnh);
 
                     clientesList.add(cliente);
 
@@ -71,58 +75,76 @@ public class Main {
                     break;
                 case 3:
 
+                    //Efetuar Locacao
                     System.out.println("Digite um nome para verificar se o usuario já está cadastrado!");
                     String usuarioCadastrado = sc.nextLine();
                     System.out.println();
-                    Cliente clienteEncontrado = clienteService.buscarUsuarioParaLocacao(clientesList,usuarioCadastrado);
+
+                    //Retorna se o cliente foi encontrado dado um nome.
+                    Cliente clienteEncontrado = clienteService.buscarUsuarioParaLocacao(clientesList, usuarioCadastrado);
                     System.out.println(clienteEncontrado.exibirInformacaoCliente());
 
+                    //Retorna se o veiculo esta disponivel para locacao
+                    System.out.println("Digite o modelo do veiculo: ");
+                    String modeloInput = sc.nextLine();
+                    Veiculo veiculoEncontrado = veiculoService.veiculoDisponivel(veiculosList, modeloInput);
+                    System.out.println(veiculoEncontrado.exibirInformacaoVeiculo());
 
-                    System.out.println("Dados para locação: ");
-                    System.out.println("Ativa ou nao");
-                    boolean locacaoInput = sc.nextBoolean();
-                    sc.nextLine();
+                    //Verifica se o veiculo está disponivel para locação e se o cliente ja fez locacao antes
+                    if (veiculoEncontrado.isDisponivel() && (locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado))) {
+                        System.out.println("Data inicial locacao: ");
+                        String locacaoDataInicio = sc.nextLine();
+                        LocalDate locacaoDataInicioFormatada = LocalDate.parse(locacaoDataInicio, formatter);
 
-                    System.out.println("Data locacao: ");
-                    String locacaoDataInicio = sc.nextLine();
-                    LocalDate locacaoDataInicioFormatada = LocalDate.parse(locacaoDataInicio, formatter);
+                        System.out.println("Data de devolução: ");
+                        String locacaoDataFim = sc.nextLine();
 
-                    System.out.println("Data de devolução: ");
-                    String locacaoDataFim = sc.nextLine();
+                        LocalDate locacaoDataFinalFormatada = LocalDate.parse(locacaoDataFim, formatter);
+                        veiculoEncontrado.setDisponivel(false);
+                        Locacao locacaoFeita = new Locacao(clienteEncontrado, veiculoEncontrado, locacaoDataInicioFormatada, locacaoDataFinalFormatada);
+                        locacaoList.add(locacaoFeita);
+                        System.out.println(locacaoFeita.imprimirLocacao());
+                        System.out.println(menu.mostrarMenu());
+                        opcaoMenu = sc.nextInt();
+                        sc.nextLine();
 
-                    LocalDate locacaoDataFinalFormatada = LocalDate.parse(locacaoDataFim, formatter);
-
-                    Locacao locacao = new Locacao(locacaoInput, locacaoDataInicioFormatada, locacaoDataFinalFormatada);
-                    System.out.println("Dados da locacao veiculo e cliente: " + locacao.imprimirLocacao());
+                        //Se nao tiver disponivel
+                    } else if (!locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado)) {
+                        System.out.println("Cliente ja possui locacao ativa");
+                        System.out.println(menu.mostrarMenu());
+                        opcaoMenu = sc.nextInt();
+                        sc.nextLine();
+                        break;
+                    } else {
+                        System.out.printf("O veiculo %s está indisponivel para locacao!", veiculoEncontrado.getModelo());
+                        System.out.println(menu.mostrarMenu());
+                        opcaoMenu = sc.nextInt();
+                        sc.nextLine();
+                        break;
+                    }
                     break;
                 case 4:
                     System.out.println("Exibir Veiculos Cadastrados!");
-
                     System.out.println(veiculoService.veiculoParaLocacao(veiculosList));
-                    menu.mostrarMenu();
+                    System.out.println(menu.mostrarMenu());
                     opcaoMenu = sc.nextInt();
                     sc.nextLine();
                     break;
                 case 5:
                     System.out.println("Exibir Usuarios cadastrados!");
-
                     System.out.println(clienteService.mostrarUsuariosCadastrados(clientesList));
-                    menu.mostrarMenu();
+                    System.out.println(menu.mostrarMenu());
                     opcaoMenu = sc.nextInt();
                     sc.nextLine();
                     break;
-
                 case 6:
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcaoMenu);
             }
-            
-
-           
-
-            
         }
+    }
+}
         
               
 
@@ -132,5 +154,3 @@ public class Main {
 
 
 
-    }
-}

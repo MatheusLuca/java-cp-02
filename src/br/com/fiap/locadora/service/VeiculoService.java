@@ -14,6 +14,13 @@ public class VeiculoService {
         return resultado;
     }
 
-
-
+    public Veiculo veiculoDisponivel(ArrayList<Veiculo> lista, String nomeVeiculo) {
+        for (Veiculo v : lista) {
+            if (v.getModelo().equalsIgnoreCase(nomeVeiculo)) {
+                return v;
+            }
+        }
+        return null;
+    }
 }
+

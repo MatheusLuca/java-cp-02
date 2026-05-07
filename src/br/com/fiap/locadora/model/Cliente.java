@@ -46,13 +46,15 @@ public class Cliente {
         this.idade = idade;
     }
 
-    public String exibirInformacaoCliente(){
+    public String exibirInformacaoCliente() {
         return """
-                Nome: %s
-                cpf: %s
-                idade: %d
-                cnh: %s
-                """.formatted(this.nome, this.cpf, this.idade, this.cnh);
+            ┌── Cliente ──────────────────
+            │ Nome . . . . . . . : %s
+            │ CPF  . . . . . . . : %s
+            │ Idade . . . . . . .: %d anos
+            │ CNH  . . . . . . . : %s
+            └──────────────────────────────
+            """.stripIndent().formatted(nome, cpf, idade, cnh);
     }
 
 

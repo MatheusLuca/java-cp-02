@@ -7,6 +7,8 @@ public class Veiculo {
     private int ano;
     private String cor;
     private String fabricante;
+    private boolean disponivel;
+
 
     public Veiculo(String modelo, String placa, int ano, String cor, String fabricante) {
         this.modelo = modelo;
@@ -14,6 +16,8 @@ public class Veiculo {
         this.ano = ano;
         this.cor = cor;
         this.fabricante = fabricante;
+        disponivel = true;
+
     }
 
     public String getModelo() {
@@ -56,16 +60,27 @@ public class Veiculo {
         this.fabricante = fabricante;
     }
 
-    public String exibirInformacaoVeiculo(){
-        return """
-                modelo: %s
-                placa: %s
-                ano: %d
-                cor: %s
-                fabricante: %s
-                """.formatted(this.modelo, this.placa ,this.ano, this.cor, this.fabricante);
+    public boolean isDisponivel() {
+        return disponivel;
     }
 
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
+    public String exibirInformacaoVeiculo() {
+        String status = disponivel ? "Disponível" : "Indisponível";
+        return """
+            ┌── Veículo ──────────────────
+            │ Modelo . . . . . . : %s
+            │ Placa  . . . . . . : %s
+            │ Ano  . . . . . . . : %d
+            │ Cor  . . . . . . . : %s
+            │ Fabricante . . . . : %s
+            │ Situação . . . . . : %s
+            └──────────────────────────────
+            """.stripIndent().formatted(modelo, placa, ano, cor, fabricante, status);
+    }
 
 
 }
