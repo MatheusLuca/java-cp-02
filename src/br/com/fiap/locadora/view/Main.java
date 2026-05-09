@@ -87,7 +87,7 @@ public class Main {
                     Cliente clienteEncontrado = clienteService.buscarUsuarioParaLocacao(clientesList, usuarioCadastrado);
 
                     //Se não encontrar usuarioCadastrado
-                    if(clienteEncontrado == null){
+                    if (clienteEncontrado == null) {
                         System.out.println("Cliente não encontrado");
                         System.out.println(menu.mostrarMenu());
                         opcaoMenu = sc.nextInt();
@@ -103,7 +103,7 @@ public class Main {
                     //Metodo veiculoService.veiculoDisponivel
                     //Retorna Veiculo se encontrar o veiculoEncontrado
                     // Retorna null se não encontrar o veiculoEncontrado
-                    if(veiculoEncontrado == null){
+                    if (veiculoEncontrado == null) {
                         System.out.println("Veiculo não encontrado");
                         System.out.println(menu.mostrarMenu());
                         opcaoMenu = sc.nextInt();
@@ -137,8 +137,8 @@ public class Main {
                         opcaoMenu = sc.nextInt();
                         sc.nextLine();
 
-                    //Retorna false caso o cliente já possua uma locação
-                    // cpf de um item na lista é igual a o cpf obtido da varivel clienteEncontrado.
+                        //Retorna false caso o cliente já possua uma locação
+                        // cpf de um item na lista é igual a o cpf obtido da varivel clienteEncontrado.
                     } else if (!locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado)) {
                         //LocacaoService.encontrarLocacaoPorCpf
                         //Metodo percorre a lista de locação
@@ -146,7 +146,7 @@ public class Main {
                         //Seja igual ao CPF do cliente recebido
                         //Função retorna um objeto locacao
                         Locacao locacaoEncontrada = locacaoService.encontrarLocacaoPorCpf(locacaoList, clienteEncontrado.getCpf());
-                        System.out.printf("Cliente %s ja possui  o  veiculo %s locado\n", clienteEncontrado.getNome() ,locacaoEncontrada.getVeiculo().getModelo());
+                        System.out.printf("Cliente %s ja possui  o  veiculo %s locado\n", clienteEncontrado.getNome(), locacaoEncontrada.getVeiculo().getModelo());
                         System.out.println(menu.mostrarMenu());
                         opcaoMenu = sc.nextInt();
                         sc.nextLine();

@@ -6,22 +6,22 @@ import java.util.ArrayList;
 
 public class ClienteService {
 
-    public String mostrarUsuariosCadastrados(ArrayList<Cliente> lista){
+    public String mostrarUsuariosCadastrados(ArrayList<Cliente> lista) {
         String usuario = "";
-        if(!(lista.isEmpty())){
-            for(Cliente u : lista){
+        if (!(lista.isEmpty())) {
+            for (Cliente u : lista) {
                 usuario += u.exibirInformacaoCliente() + "\n";
             }
-        }else{
+        } else {
             return "Nenhum usuario cadastrado!";
         }
         return usuario;
 
     }
 
-    public Cliente buscarUsuarioParaLocacao(ArrayList<Cliente> lista, String nome){
-        for(Cliente u : lista){
-            if(u.getNome().equalsIgnoreCase(nome)){
+    public Cliente buscarUsuarioParaLocacao(ArrayList<Cliente> lista, String nome) {
+        for (Cliente u : lista) {
+            if (u.getNome().equalsIgnoreCase(nome)) {
                 return u;
             }
         }

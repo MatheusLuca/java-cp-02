@@ -4,7 +4,7 @@ public class MenuService {
 
     public String boasVindas() {
         return """
-
+                
                 ============================================================
                   Bem-vindo ao sistema da Locadora FIAP
                 ============================================================
@@ -13,7 +13,7 @@ public class MenuService {
 
     public String mostrarMenu() {
         return """
-
+                
                 ============================================================
                   MENU PRINCIPAL
                 ============================================================
