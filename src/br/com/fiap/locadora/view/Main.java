@@ -75,29 +75,57 @@ public class Main {
                     break;
                 case 3:
                     //Efetuar Locacao
+                    //Receber um cliente
                     System.out.println("Digite um nome para verificar se o usuario já está cadastrado!");
                     String usuarioCadastrado = sc.nextLine();
                     System.out.println();
 
-                    //Retorna se o cliente foi encontrado dado um nome.
+                    //Retorna se o cliente está cadastrado no sistema.
+                    //Metodo clienteService.buscarUsuarioParaLocacao
+                    // Retorna Cliente se encontrar o usuarioCadastrado
+                    // Retorna null caso não encontre usuarioCadastrado
                     Cliente clienteEncontrado = clienteService.buscarUsuarioParaLocacao(clientesList, usuarioCadastrado);
-                    System.out.println(clienteEncontrado.exibirInformacaoCliente());
 
-                    //Retorna se o veiculo esta disponivel para locacao
+                    //Se não encontrar usuarioCadastrado
+                    if(clienteEncontrado == null){
+                        System.out.println("Cliente não encontrado");
+                        System.out.println(menu.mostrarMenu());
+                        opcaoMenu = sc.nextInt();
+                        sc.nextLine();
+                        break;
+                    }
+
+                    //Armazenando um veiculo digitado pelo usuario
                     System.out.println("Digite o modelo do veiculo: ");
                     String modeloInput = sc.nextLine();
                     Veiculo veiculoEncontrado = veiculoService.veiculoDisponivel(veiculosList, modeloInput);
 
+                    //Metodo veiculoService.veiculoDisponivel
+                    //Retorna Veiculo se encontrar o veiculoEncontrado
+                    // Retorna null se não encontrar o veiculoEncontrado
+                    if(veiculoEncontrado == null){
+                        System.out.println("Veiculo não encontrado");
+                        System.out.println(menu.mostrarMenu());
+                        opcaoMenu = sc.nextInt();
+                        sc.nextLine();
+                        break;
+                    }
 
-                    //Verifica se o veiculo está disponivel para locação e se o cliente ja fez locacao antes
+                    //VeiculoEncontrado.isDisponivel for true (veiculo está disponivel para locação)
+
+                    //A função locacaoService.verificarSeClienteJaLocou
+                    //Verifica se um cliente já possui uma locação registrada.
+                    //A função percorre a lista de locações e compara o CPF do cliente recebido com o CPF dos clientes presentes nas locações.
+                    // Retorna true caso o cliente ainda não tenha nenhuma locação.
+
                     if (veiculoEncontrado.isDisponivel() && (locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado))) {
                         System.out.println(veiculoEncontrado.exibirInformacaoVeiculo());
                         System.out.println(clienteEncontrado.exibirInformacaoCliente());
-                        System.out.println("Data inicial locacao: ");
+                        System.out.println("Data inicial locacao: dd/mm/aaaa ");
                         String locacaoDataInicio = sc.nextLine();
                         LocalDate locacaoDataInicioFormatada = LocalDate.parse(locacaoDataInicio, formatter);
 
-                        System.out.println("Data de devolução: ");
+                        System.out.println("Data de devolução: dd/mm/aaaa");
                         String locacaoDataFim = sc.nextLine();
 
                         LocalDate locacaoDataFinalFormatada = LocalDate.parse(locacaoDataFim, formatter);
@@ -109,9 +137,15 @@ public class Main {
                         opcaoMenu = sc.nextInt();
                         sc.nextLine();
 
-                        //Se nao tiver disponivel
+                    //Retorna false caso o cliente já possua uma locação
+                    // cpf de um item na lista é igual a o cpf obtido da varivel clienteEncontrado.
                     } else if (!locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado)) {
-                        Locacao locacaoEncontrada = locacaoService.encontrarVeiculoLocadoPeloCliente(clienteEncontrado.getNome(), locacaoList);
+                        //LocacaoService.encontrarLocacaoPorCpf
+                        //Metodo percorre a lista de locação
+                        //Retorna a primeira locacao encontrada cujo cpf do cliente (da lista de locacao)
+                        //Seja igual ao CPF do cliente recebido
+                        //Função retorna um objeto locacao
+                        Locacao locacaoEncontrada = locacaoService.encontrarLocacaoPorCpf(locacaoList, clienteEncontrado.getCpf());
                         System.out.printf("Cliente %s ja possui  o  veiculo %s locado\n", clienteEncontrado.getNome() ,locacaoEncontrada.getVeiculo().getModelo());
                         System.out.println(menu.mostrarMenu());
                         opcaoMenu = sc.nextInt();
@@ -164,9 +198,9 @@ public class Main {
                     sc.nextLine();
                     break;
                 case 8:
-                    System.out.println("Excluir locacao");
+                    System.out.println("Liberar veiculo para locacao");
 
-
+                    break;
                 case 9:
                     System.out.println("Exibir todas as locacões!");
                     System.out.println(locacaoService.exibirLocacoes(locacaoList));

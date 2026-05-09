@@ -16,15 +16,14 @@ public class LocacaoService {
         return true;
     }
 
-    public Locacao encontrarVeiculoLocadoPeloCliente(String nome, ArrayList<Locacao> lista){
-        for(Locacao l : lista){
-            if(l.getCliente().getNome().equalsIgnoreCase(nome)){
+    public Locacao encontrarLocacaoPorCpf(ArrayList<Locacao> lista, String cpf) {
+        for (Locacao l : lista) {
+            if (l.getCliente().getCpf().equalsIgnoreCase(cpf)) {
                 return l;
             }
         }
         return null;
     }
-
     public String exibirLocacoes(ArrayList<Locacao> lista){
         String locacoes = "";
 
