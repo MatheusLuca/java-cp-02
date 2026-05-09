@@ -33,6 +33,30 @@ public class LocacaoService {
         return locacoes;
     }
 
+    public String listarLocacaoIndisponiveis(ArrayList<Locacao> lista){
+        String locacõesIndisponiveis = "";
+        for(Locacao l : lista){
+            if(!(l.getVeiculo().isDisponivel())){
+                locacõesIndisponiveis += l.imprimirLocacao() + "\n";
+            }
+        }
+        return locacõesIndisponiveis;
+    }
+
+    public void removerLocacao(ArrayList<Locacao> lista, String cpf){
+
+        for(int i = 0; i < lista.size(); i++){
+
+            Locacao l = lista.get(i);
+
+            if(l.getCliente().getCpf().equalsIgnoreCase(cpf)){
+
+                l.getVeiculo().setDisponivel(true);
+                lista.remove(i);
+                break;
+            }
+            }
+        }
+    }
 
 
-}

@@ -199,7 +199,13 @@ public class Main {
                     break;
                 case 8:
                     System.out.println("Liberar veiculo para locacao");
-
+                    System.out.println(locacaoService.exibirLocacoes(locacaoList));
+                    System.out.println("Digite o cpf do cliente para efetuar devolução");
+                    String devolucaoCpf = sc.nextLine();
+                    locacaoService.removerLocacao(locacaoList, devolucaoCpf);
+                    System.out.println(menu.mostrarMenu());
+                    opcaoMenu = sc.nextInt();
+                    sc.nextLine();
                     break;
                 case 9:
                     System.out.println("Exibir todas as locacões!");
