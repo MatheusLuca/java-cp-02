@@ -74,19 +74,12 @@ public class Main {
                     sc.nextLine();
                     break;
                 case 3:
-                    //Efetuar Locacao
-                    //Receber um cliente
                     System.out.println("Digite um nome para verificar se o usuario já está cadastrado!");
                     String usuarioCadastrado = sc.nextLine();
                     System.out.println();
 
-                    //Retorna se o cliente está cadastrado no sistema.
-                    //Metodo clienteService.buscarUsuarioParaLocacao
-                    // Retorna Cliente se encontrar o usuarioCadastrado
-                    // Retorna null caso não encontre usuarioCadastrado
                     Cliente clienteEncontrado = clienteService.buscarUsuarioParaLocacao(clientesList, usuarioCadastrado);
 
-                    //Se não encontrar usuarioCadastrado
                     if (clienteEncontrado == null) {
                         System.out.println("Cliente não encontrado");
                         System.out.println(menu.mostrarMenu());
@@ -95,14 +88,10 @@ public class Main {
                         break;
                     }
 
-                    //Armazenando um veiculo digitado pelo usuario
                     System.out.println("Digite o modelo do veiculo: ");
                     String modeloInput = sc.nextLine();
                     Veiculo veiculoEncontrado = veiculoService.veiculoDisponivel(veiculosList, modeloInput);
 
-                    //Metodo veiculoService.veiculoDisponivel
-                    //Retorna Veiculo se encontrar o veiculoEncontrado
-                    // Retorna null se não encontrar o veiculoEncontrado
                     if (veiculoEncontrado == null) {
                         System.out.println("Veiculo não encontrado");
                         System.out.println(menu.mostrarMenu());
@@ -110,13 +99,6 @@ public class Main {
                         sc.nextLine();
                         break;
                     }
-
-                    //VeiculoEncontrado.isDisponivel for true (veiculo está disponivel para locação)
-
-                    //A função locacaoService.verificarSeClienteJaLocou
-                    //Verifica se um cliente já possui uma locação registrada.
-                    //A função percorre a lista de locações e compara o CPF do cliente recebido com o CPF dos clientes presentes nas locações.
-                    // Retorna true caso o cliente ainda não tenha nenhuma locação.
 
                     if (veiculoEncontrado.isDisponivel() && (locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado))) {
                         System.out.println(veiculoEncontrado.exibirInformacaoVeiculo());
@@ -136,15 +118,7 @@ public class Main {
                         System.out.println(menu.mostrarMenu());
                         opcaoMenu = sc.nextInt();
                         sc.nextLine();
-
-                        //Retorna false caso o cliente já possua uma locação
-                        // cpf de um item na lista é igual a o cpf obtido da varivel clienteEncontrado.
                     } else if (!locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado)) {
-                        //LocacaoService.encontrarLocacaoPorCpf
-                        //Metodo percorre a lista de locação
-                        //Retorna a primeira locacao encontrada cujo cpf do cliente (da lista de locacao)
-                        //Seja igual ao CPF do cliente recebido
-                        //Função retorna um objeto locacao
                         Locacao locacaoEncontrada = locacaoService.encontrarLocacaoPorCpf(locacaoList, clienteEncontrado.getCpf());
                         System.out.printf("Cliente %s ja possui  o  veiculo %s locado\n", clienteEncontrado.getNome(), locacaoEncontrada.getVeiculo().getModelo());
                         System.out.println(menu.mostrarMenu());
@@ -215,7 +189,12 @@ public class Main {
                     sc.nextLine();
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + opcaoMenu);
+                    while(opcaoMenu != 10){
+                        System.out.println("Digite uma opção valida correspondente ao menu: ");
+                        System.out.println(menu.mostrarMenu());
+                        opcaoMenu = sc.nextInt();
+                        sc.nextLine();
+                    }
             }
         }
     }
