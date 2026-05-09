@@ -1,7 +1,15 @@
 package br.com.fiap.locadora.service;
 
+/**
+ * Textos fixos de boas-vindas e de opções do menu principal do console.
+ */
 public class MenuService {
 
+    /**
+     * Mensagem inicial exibida ao usuário ao abrir o sistema (banner de boas-vindas).
+     *
+     * @return bloco de texto formatado com {@code stripIndent}
+     */
     public String boasVindas() {
         return """
                 
@@ -11,6 +19,13 @@ public class MenuService {
                 """.stripIndent();
     }
 
+    /**
+     * Retorna o menu principal numerado com todas as operações disponíveis no programa.
+     *
+     * <p>Inclui cadastros, locação, listagens, exclusões, devolução e encerramento.</p>
+     *
+     * @return bloco de texto do menu pronto para {@code System.out}
+     */
     public String mostrarMenu() {
         return """
                 

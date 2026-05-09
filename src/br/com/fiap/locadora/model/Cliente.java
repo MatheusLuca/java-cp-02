@@ -1,5 +1,8 @@
 package br.com.fiap.locadora.model;
 
+/**
+ * Representa o locatário: dados pessoais e identificação por CPF e CNH.
+ */
 public class Cliente {
 
     private String nome;
@@ -7,6 +10,14 @@ public class Cliente {
     private int idade;
     private String cnh;
 
+    /**
+     * Cria um cliente com os dados informados no cadastro.
+     *
+     * @param nome nome completo
+     * @param cpf documento usado nas validações de locação
+     * @param idade idade em anos
+     * @param cnh identificação da carteira de habilitação
+     */
     public Cliente(String nome, String cpf, int idade, String cnh) {
         this.nome = nome;
         this.cpf = cpf;
@@ -46,6 +57,11 @@ public class Cliente {
         this.idade = idade;
     }
 
+    /**
+     * Monta um bloco ASCII com nome, CPF, idade e CNH para exibição no console.
+     *
+     * @return texto formatado (text block com {@code formatted})
+     */
     public String exibirInformacaoCliente() {
         return """
             ┌── Cliente ──────────────────

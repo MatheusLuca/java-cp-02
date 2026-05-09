@@ -1,5 +1,8 @@
 package br.com.fiap.locadora.model;
 
+/**
+ * Veículo da frota com identificação, características e flag de disponibilidade para locação.
+ */
 public class Veiculo {
 
     private String modelo;
@@ -10,6 +13,15 @@ public class Veiculo {
     private boolean disponivel;
 
 
+    /**
+     * Instancia um veículo disponível para locação ({@code disponivel == true}).
+     *
+     * @param modelo modelo (usado na busca ao locar)
+     * @param placa placa do veículo
+     * @param ano ano de fabricação
+     * @param cor cor
+     * @param fabricante fabricante
+     */
     public Veiculo(String modelo, String placa, int ano, String cor, String fabricante) {
         this.modelo = modelo;
         this.placa = placa;
@@ -68,6 +80,11 @@ public class Veiculo {
         this.disponivel = disponivel;
     }
 
+    /**
+     * Exibe ficha do veículo com situação {@code Disponível} ou {@code Alugado} conforme o atributo {@code disponivel}.
+     *
+     * @return texto formatado para o console
+     */
     public String exibirInformacaoVeiculo() {
         String status = disponivel ? "Disponível" : "Alugado";
         return """
