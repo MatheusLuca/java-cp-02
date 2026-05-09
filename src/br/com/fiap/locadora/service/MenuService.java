@@ -10,7 +10,7 @@ public class MenuService {
      *
      * @return bloco de texto formatado com {@code stripIndent}
      */
-    public String boasVindas() {
+    public String mensgemInicial() {
         return """
                 
                 ============================================================

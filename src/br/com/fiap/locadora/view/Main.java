@@ -33,7 +33,7 @@ public class Main {
         VeiculoService veiculoService = new VeiculoService();
         ClienteService clienteService = new ClienteService();
         LocacaoService locacaoService = new LocacaoService();
-
+        System.out.println(menu.mensgemInicial());
         System.out.println(menu.mostrarMenu());
 
         int opcaoMenu = sc.nextInt();
