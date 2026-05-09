@@ -16,6 +16,24 @@ public class LocacaoService {
         return true;
     }
 
-    public Locacao informacaoLocacao
+    public Locacao encontrarVeiculoLocadoPeloCliente(String nome, ArrayList<Locacao> lista){
+        for(Locacao l : lista){
+            if(l.getCliente().getNome().equalsIgnoreCase(nome)){
+                return l;
+            }
+        }
+        return null;
+    }
+
+    public String exibirLocacoes(ArrayList<Locacao> lista){
+        String locacoes = "";
+
+        for(Locacao l : lista){
+            locacoes += l.imprimirLocacao() + "\n";
+        }
+        return locacoes;
+    }
+
+
 
 }

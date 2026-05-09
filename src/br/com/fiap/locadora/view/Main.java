@@ -111,9 +111,8 @@ public class Main {
 
                         //Se nao tiver disponivel
                     } else if (!locacaoService.verificarSeClienteJaLocou(locacaoList, clienteEncontrado)) {
-                        System.out.printf("Cliente %s ja possui  o  veiculo %s locado", clienteEncontrado.getNome());
-                        clienteEncontrado.getNome();
-
+                        Locacao locacaoEncontrada = locacaoService.encontrarVeiculoLocadoPeloCliente(clienteEncontrado.getNome(), locacaoList);
+                        System.out.printf("Cliente %s ja possui  o  veiculo %s locado\n", clienteEncontrado.getNome() ,locacaoEncontrada.getVeiculo().getModelo());
                         System.out.println(menu.mostrarMenu());
                         opcaoMenu = sc.nextInt();
                         sc.nextLine();
@@ -141,6 +140,39 @@ public class Main {
                     sc.nextLine();
                     break;
                 case 6:
+                    System.out.println("Excluir veículo — informe a placa:");
+                    String placaExcluir = sc.nextLine();
+                    if (veiculoService.excluirVeiculo(veiculosList, placaExcluir)) {
+                        System.out.println("Veículo removido com sucesso.");
+                    } else {
+                        System.out.println("Nenhum veículo encontrado com essa placa.");
+                    }
+                    System.out.println(menu.mostrarMenu());
+                    opcaoMenu = sc.nextInt();
+                    sc.nextLine();
+                    break;
+                case 7:
+                    System.out.println("Remover cliente — informe o nome:");
+                    String nomeRemover = sc.nextLine();
+                    if (clienteService.removerCliente(clientesList, nomeRemover)) {
+                        System.out.println("Cliente removido com sucesso.");
+                    } else {
+                        System.out.println("Nenhum cliente encontrado com esse nome.");
+                    }
+                    System.out.println(menu.mostrarMenu());
+                    opcaoMenu = sc.nextInt();
+                    sc.nextLine();
+                    break;
+                case 8:
+                    System.out.println("Excluir locacao");
+
+
+                case 9:
+                    System.out.println("Exibir todas as locacões!");
+                    System.out.println(locacaoService.exibirLocacoes(locacaoList));
+                    System.out.println(menu.mostrarMenu());
+                    opcaoMenu = sc.nextInt();
+                    sc.nextLine();
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcaoMenu);

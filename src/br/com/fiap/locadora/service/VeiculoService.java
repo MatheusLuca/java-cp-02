@@ -22,5 +22,9 @@ public class VeiculoService {
         }
         return null;
     }
+
+    public boolean excluirVeiculo(ArrayList<Veiculo> lista, String placa) {
+        return lista.removeIf(v -> v.getPlaca().equalsIgnoreCase(placa));
+    }
 }
 
